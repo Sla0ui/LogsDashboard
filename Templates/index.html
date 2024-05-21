@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h1>DASHBOARD</h1>
+        <nav class="nav flex-column">
+            <a class="nav-link" href="#unique-visitors">Unique Visitors Per Day</a>
+            <a class="nav-link" href="#overall-requests">Overall Analyzed Requests</a>
+            <a class="nav-link" href="#requested-files">Requested files by urls</a>
+            <a class="nav-link" href="#static-requests">Static requests</a>
+            <a class="nav-link" href="#not-found-urls">Not found urls</a>
+            <a class="nav-link" href="#visitor-hostnames">Visitor Hostname and ips</a>
+            <a class="nav-link" href="#failed-connection-attempts">Failed connection attempts by ips</a>
+            <a class="nav-link" href="#failed-connection-by-country">Failed connection attempts by country</a>
+            <a class="nav-link" href="#http-status-codes">HTTP status codes</a>
+            <a class="nav-link" href="#operating-systems">Operating systems</a>
+            <a class="nav-link" href="#browsers">Browsers</a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div id="overall-requests" class="dashboard-section">
+            <h2>Overall Analyzed Requests</h2>
+            <table class="table">
+                <tr>
+                    <th>Metric</th>
+                    <th>Value</th>
+                </tr>
+                {% for key, value in formatted_data_oar.items() %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>{{ value }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div id="unique-visitors" class="dashboard-section">
+            <h2>Unique Visitors Per Day</h2>
+            <img src="data:image/png;base64,{{ plot_uvph }}" alt="Unique Visitors Per Day">
+        </div>
+        <div id="requested-files" class="dashboard-section">
+            <h2>Requested files by urls</h2>
+            <img src="data:image/png;base64,{{ plot_rf }}" alt="requested_files">
+        </div>
+        <div id="static-requests" class="dashboard-section">
+            <h2>Static requests</h2>
+            <img src="data:image/png;base64,{{ plot_sr }}" alt="static_requests">
+        </div>
+        <div id="not-found-urls" class="dashboard-section">
+            <h2>Not found urls</h2>
+            <img src="data:image/png;base64,{{ plot_nfu }}" alt="not_found_urls">
+        </div>
+        <div id="visitor-hostnames" class="dashboard-section">
+            <h2>Visitor Hostname and ips</h2>
+            <img src="data:image/png;base64,{{ plot_vhi }}" alt="Visitor_hostname_ips">
+        </div>
+        <div id="failed-connection-attempts" class="dashboard-section">
+            <h2>Failed connection attempts by ips</h2>
+            <img src="data:image/png;base64,{{ plot_fcai }}" alt="failed_connection_attempts">
+        </div> 
+        <div id="failed-connection-by-country" class="dashboard-section">
+            <h2>Failed connection attempts by country</h2>
+            <iframe id="map-iframe" width="100%" height="600px" frameborder="0"></iframe>
+        </div>  
+        <div id="http-status-codes" class="dashboard-section">
+            <h2>HTTP status codes</h2>
+            <img src="data:image/png;base64,{{ plot_httpsc }}" alt="http_status_codes">
+        </div> 
+        <div id="operating-systems" class="dashboard-section">
+            <h2>Operating systems</h2>
+            <img src="data:image/png;base64,{{ plot_os }}" alt="operating_systems">
+        </div>
+        <div id="browsers" class="dashboard-section">
+            <h2>Browsers</h2>
+            <img src="data:image/png;base64,{{ plot_br }}" alt="browsers">
+        </div>   
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var mapIframe = document.getElementById("map-iframe");
+            mapIframe.src = "/map_fcai_c";
+        });
+    </script>
+</body>
+</html>
